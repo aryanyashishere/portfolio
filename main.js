@@ -46,7 +46,13 @@ const sendEmail = (event) => {
     event.preventDefault()
 
     // Send email to yourself
-    emailjs.sendForm('service_obsgdao', 'template_vk9tpdr', '#contact-form', 'nR5d5T3c8oH0B55An')
+    emailjs.sendForm(
+        
+         'service_ib95uik',          // your service ID
+        'template_z48baar',         // your first template ID
+        '#contact-form',
+        'wGxdAZf6mdKc364TB'         // your public key
+    )
         .then(() => {
             // Show sent message
             contactMessage.textContent = "Message sent successfully ✅"
@@ -57,14 +63,15 @@ const sendEmail = (event) => {
             // Remove message after five seconds
             setTimeout(() => {
                 contactMessage.textContent = ""
-            }, 5000)
+            }, 4000 )
 
             // Clear input fields
             contactForm.reset()
 
-        }, () => {
-            // Show error message
-            contactMessage.textContent = "Message not sent (service error) ❌"
+        }, (error) => {
+            //show error message.
+            contactMessage.textContent = "Message not sent ❌ (Service Error)";
+        console.error(error);
         })
 }
 
@@ -78,18 +85,18 @@ const sendConfirmationEmail = () => {
 
     // Prepare params for the email template
     const templateParams = {
-        from_name: userName,
+        from_name: userName,    
         subject: userSubject,
         message: userMessage,
         reply_to: userEmail
     }
 
     // Send the confirmation email
-    emailjs.send('service_obsgdao', 'template_9uhgscf', templateParams, 'nR5d5T3c8oH0B55An')
+    emailjs.send('service_ib95uik', 'template_c6ekox8', templateParams, 'wGxdAZf6mdKc364TB')
         .then(() => {
             console.log("Confirmation email sent to the user successfully")
-        }, () => {
-            console.error("Failed to send confirmation email")
+        }, (error) => {
+            console.error("Failed to send confirmation email failed", error)
         })
 }
 
